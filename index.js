@@ -372,10 +372,10 @@ app.delete("/api/orders/:id", (req, res) => {
 
 // cart
 // // Read item
-app.get("/api/carts/:id", (req, res) => {
+app.get("/api/cartItems/:id", (req, res) => {
   (async () => {
     try {
-      const document = db.collection("carts").doc(req.params.id);
+      const document = db.collection("cartItems").doc(req.params.id);
       const user = await document.get();
       const response = user.data();
       return res.status(200).send(response);
@@ -387,10 +387,10 @@ app.get("/api/carts/:id", (req, res) => {
 });
 
 // // Read all
-app.get("/api/carts", (req, res) => {
+app.get("/api/cartItems", (req, res) => {
   (async () => {
     try {
-      const query = db.collection("carts");
+      const query = db.collection("cartItems");
       const response = [];
       await query.get().then((querySnapshot) => {
         const docs = querySnapshot.docs; // the result of our query
@@ -413,10 +413,10 @@ app.get("/api/carts", (req, res) => {
 });
 
 // // Update
-app.patch("/api/carts/:id", (req, res) => {
+app.patch("/api/cartItems/:id", (req, res) => {
   (async () => {
     try {
-      const document = db.collection("orders").doc(req.params.id);
+      const document = db.collection("cartItems").doc(req.params.id);
       await document.update(req.body);
       return res.status(200).send();
     } catch (error) {
@@ -426,10 +426,10 @@ app.patch("/api/carts/:id", (req, res) => {
   })();
 });
 
-app.post("/api/carts", (req, res) => {
+app.post("/api/cartItems", (req, res) => {
   (async () => {
     try {
-      const query = db.collection("carts");
+      const query = db.collection("cartItems");
       const response = [];
       await query
         .get()
@@ -447,7 +447,7 @@ app.post("/api/carts", (req, res) => {
         .then(async (respro) => {
           const id = response.length + 1;
           await db
-            .collection("carts")
+            .collection("cartItems")
             .doc("/" + id + "/")
             .create({ ...req.body, createdAt: new Date().toISOString() });
           return res.status(200).send();
@@ -460,10 +460,10 @@ app.post("/api/carts", (req, res) => {
 });
 
 // // Delete
-app.delete("/api/carts/:id", (req, res) => {
+app.delete("/api/cartItems/:id", (req, res) => {
   (async () => {
     try {
-      const document = db.collection("orders").doc(req.params.id);
+      const document = db.collection("cartItems").doc(req.params.id);
       await document.update({ deletedAt: new Date().toISOString() });
       return res.status(200).send();
     } catch (error) {
@@ -472,6 +472,110 @@ app.delete("/api/carts/:id", (req, res) => {
     }
   })();
 });
+
+// order detail
+// // Read item
+app.get("/api/orderDetails/:id", (req, res) => {
+  (async () => {
+    try {
+      const document = db.collection("orderDetails").doc(req.params.id);
+      const user = await document.get();
+      const response = user.data();
+      return res.status(200).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
+// // Read all
+app.get("/api/orderDetails", (req, res) => {
+  (async () => {
+    try {
+      const query = db.collection("orderDetails");
+      const response = [];
+      await query.get().then((querySnapshot) => {
+        const docs = querySnapshot.docs; // the result of our query
+        for (const doc of docs) {
+          // add each doc to our JSON response
+          const selectedItem = {
+            id: doc.id,
+            ...doc.data(),
+          };
+          response.push(selectedItem);
+        }
+        return response; // each then should return a value
+      });
+      return res.status(200).send(response); // end of async function should return a value
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
+// // Update
+app.patch("/api/orderDetails/:id", (req, res) => {
+  (async () => {
+    try {
+      const document = db.collection("orderDetails").doc(req.params.id);
+      await document.update(req.body);
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
+app.post("/api/orderDetails", (req, res) => {
+  (async () => {
+    try {
+      const query = db.collection("orderDetails");
+      const response = [];
+      await query
+        .get()
+        .then((querySnapshot) => {
+          const docs = querySnapshot.docs; // the result of our query
+          for (const doc of docs) {
+            // add each doc to our JSON response
+            const selectedItem = {
+              id: doc.id,
+              ...doc.data(),
+            };
+            response.push(selectedItem);
+          }
+        })
+        .then(async (respro) => {
+          const id = response.length + 1;
+          await db
+            .collection("orderDetails")
+            .doc("/" + id + "/")
+            .create({ ...req.body, createdAt: new Date().toISOString() });
+          return res.status(200).send();
+        });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
+// // Delete
+app.delete("/api/orderDetails/:id", (req, res) => {
+  (async () => {
+    try {
+      const document = db.collection("orderDetails").doc(req.params.id);
+      await document.update({ deletedAt: new Date().toISOString() });
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
 
 // Expose our CRUD app as a single Cloud Function :)
 app.listen(PORT, () => {
