@@ -124,7 +124,7 @@ app.delete("/api/users/:id", (req, res) => {
   (async () => {
     try {
       const document = db.collection("users").doc(req.params.id);
-      await document.update({ deletedAt: new Date().toISOString() });
+      await document.delete();
       return res.status(200).send();
     } catch (error) {
       console.log(error);
@@ -226,7 +226,7 @@ app.delete("/api/products/:id", (req, res) => {
   (async () => {
     try {
       const document = db.collection("products").doc(req.params.id);
-      await document.update({ deletedAt: new Date().toISOString() });
+      await document.delete();
       return res.status(200).send();
     } catch (error) {
       console.log(error);
@@ -361,7 +361,7 @@ app.delete("/api/orders/:id", (req, res) => {
   (async () => {
     try {
       const document = db.collection("orders").doc(req.params.id);
-      await document.update({ deletedAt: new Date().toISOString() });
+      await document.delete();
       return res.status(200).send();
     } catch (error) {
       console.log(error);
@@ -464,7 +464,7 @@ app.delete("/api/cartItems/:id", (req, res) => {
   (async () => {
     try {
       const document = db.collection("cartItems").doc(req.params.id);
-      await document.update({ deletedAt: new Date().toISOString() });
+      await document.delete();
       return res.status(200).send();
     } catch (error) {
       console.log(error);
@@ -567,7 +567,7 @@ app.delete("/api/orderDetails/:id", (req, res) => {
   (async () => {
     try {
       const document = db.collection("orderDetails").doc(req.params.id);
-      await document.update({ deletedAt: new Date().toISOString() });
+      await document.delete();
       return res.status(200).send();
     } catch (error) {
       console.log(error);
