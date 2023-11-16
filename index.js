@@ -55,7 +55,12 @@ app.post("/api/users", (req, res) => {
               ...req.body,
               createdAt: new Date().toISOString(),
             });
-          return res.status(200).send();
+          const resData = {
+            id,
+            ...req.body,
+            createdAt: new Date().toISOString(),
+          };
+          return res.status(200).json(resData);
         });
     } catch (error) {
       console.log(error);
@@ -157,7 +162,12 @@ app.post("/api/products", (req, res) => {
             .collection("products")
             .doc("/" + id + "/")
             .create({ ...req.body, createdAt: new Date().toISOString() });
-          return res.status(200).send();
+          const resData = {
+            id,
+            ...req.body,
+            createdAt: new Date().toISOString(),
+          };
+          return res.status(200).json(resData);
         });
     } catch (error) {
       console.log(error);
@@ -259,7 +269,12 @@ app.post("/api/orders", (req, res) => {
             .collection("orders")
             .doc("/" + id + "/")
             .create({ ...req.body, createdAt: new Date().toISOString() });
-          return res.status(200).send();
+          const resData = {
+            id,
+            ...req.body,
+            createdAt: new Date().toISOString(),
+          };
+          return res.status(200).json(resData);
         });
     } catch (error) {
       console.log(error);
@@ -333,7 +348,12 @@ app.post("/api/orders", (req, res) => {
             .collection("orders")
             .doc("/" + id + "/")
             .create({ ...req.body, createdAt: new Date().toISOString() });
-          return res.status(200).send();
+          const resData = {
+            id,
+            ...req.body,
+            createdAt: new Date().toISOString(),
+          };
+          return res.status(200).json(resData);
         });
     } catch (error) {
       console.log(error);
@@ -450,7 +470,12 @@ app.post("/api/cartItems", (req, res) => {
             .collection("cartItems")
             .doc("/" + id + "/")
             .create({ ...req.body, createdAt: new Date().toISOString() });
-          return res.status(200).send();
+          const resData = {
+            id,
+            ...req.body,
+            createdAt: new Date().toISOString(),
+          };
+          return res.status(200).json(resData);
         });
     } catch (error) {
       console.log(error);
@@ -553,7 +578,12 @@ app.post("/api/orderDetails", (req, res) => {
             .collection("orderDetails")
             .doc("/" + id + "/")
             .create({ ...req.body, createdAt: new Date().toISOString() });
-          return res.status(200).send();
+            const resData = {
+              id,
+              ...req.body,
+              createdAt: new Date().toISOString(),
+            };
+            return res.status(200).json(resData);
         });
     } catch (error) {
       console.log(error);
