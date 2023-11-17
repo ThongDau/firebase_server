@@ -8,7 +8,7 @@ const serviceAccount = require("./permission.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL:
-    "https://api-ojt07-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "https://api-ojt07-v2-default-rtdb.asia-southeast1.firebasedatabase.app/",
 });
 
 // Setup app dependencies
